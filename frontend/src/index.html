@@ -584,6 +584,27 @@
       left: 12px;
     }
 
+    /* Map Headline Overlay */
+    .map-headline {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(8px);
+      padding: 12px 24px;
+      border-radius: 8px;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+      font-family: 'Roboto', 'Arial', sans-serif;
+      font-size: 18px;
+      font-weight: 600;
+      color: #1a73e8;
+      text-align: center;
+      white-space: nowrap;
+    }
+
     /* Version Info */
     #version {
       position: fixed;
@@ -725,6 +746,11 @@
 <body>
   <div id="map"></div>
 
+  <!-- Map Headline Overlay -->
+  <div class="map-headline">
+    GTM Global tsunami hazard – 2017 version
+  </div>
+
   <!-- Combined Information and Legend Panel -->
   <div class="map-info-panel">
     <!-- Dataset Information Panel -->
@@ -747,7 +773,7 @@
       <!-- Summary shown when expanded -->
       <div class="info-summary">
         <span class="info-summary-item">
-          <span class="info-summary-value">200K+</span> points
+          <span class="info-summary-value">200K+</span> coastal points
         </span>
         <span class="info-summary-item">
           <span class="info-summary-value">Global</span> coverage
@@ -761,7 +787,7 @@
       <div class="info-content" id="info-content">
         <div class="info-stat">
           <span class="info-stat-label">Total Points:</span>
-          <span class="info-stat-value">~200,000</span>
+          <span class="info-stat-value">~200,000 Coastal points</span>
         </div>
         <div class="info-stat">
           <span class="info-stat-label">Coverage:</span>
@@ -769,7 +795,7 @@
         </div>
         <div class="info-stat">
           <span class="info-stat-label">Data Type:</span>
-          <span class="info-stat-value">Tsunami Runup Heights</span>
+          <span class="info-stat-value">Maximum Tsunami Inundation Height (m)</span>
         </div>
         <div class="info-stat">
           <span class="info-stat-label">Return Periods:</span>
@@ -783,11 +809,13 @@
         <div class="info-instructions">
           <h4>How to Use:</h4>
           <ul>
-            <li>Click any point to see detailed runup data</li>
-            <li>Chart shows runup heights vs return periods</li>
+            <li>Click on any point to see the local hazard curve</li>
+            <li>The hazard curve shows the hazard curve at the selected point</li>
             <li>Zoom in for more detail and larger points</li>
             <li>Toggle satellite view with map controls</li>
-            <li>Download CSV data from popup</li>
+            <li>Download CSV data from single points from popup</li>
+            <li>Download complete dataset here: <a href="https://zenodo.org/record/100000000" target="_blank"
+                rel="noopener">https://zenodo.org/record/100000000</a></li>
           </ul>
         </div>
 
@@ -807,7 +835,7 @@
     <!-- Risk Legend Panel -->
     <div class="map-legend" onclick="toggleLegend()" id="legend-panel">
       <div class="legend-header">
-        <div class="legend-title">Tsunami Risk</div>
+        <div class="legend-title">Maximum Inundation Height (m)</div>
         <span class="legend-toggle-btn" onclick="event.stopPropagation(); toggleLegend()">⌄</span>
       </div>
 
@@ -831,25 +859,25 @@
           <div class="legend-color" style="background-color: #4CAF50;"></div>
           <div class="legend-label">Low Risk</div>
         </div>
-        <div class="legend-description">0-5m runup height • Minimal damage</div>
+        <div class="legend-description">0-5m inundation height • Minimal damage</div>
 
         <div class="legend-item">
           <div class="legend-color" style="background-color: #FFC107;"></div>
           <div class="legend-label">Medium Risk</div>
         </div>
-        <div class="legend-description">5-10m runup height • Moderate impact</div>
+        <div class="legend-description">5-10m inundation height • Moderate impact</div>
 
         <div class="legend-item">
           <div class="legend-color" style="background-color: #FF9800;"></div>
           <div class="legend-label">High Risk</div>
         </div>
-        <div class="legend-description">10-20m runup height • Significant damage</div>
+        <div class="legend-description">10-20m inundation height • Significant damage</div>
 
         <div class="legend-item">
           <div class="legend-color" style="background-color: #F44336;"></div>
           <div class="legend-label">Very High Risk</div>
         </div>
-        <div class="legend-description">>20m runup height • Catastrophic damage</div>
+        <div class="legend-description">>20m inundation height • Catastrophic damage</div>
       </div>
     </div>
   </div>
