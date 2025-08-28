@@ -56,13 +56,13 @@ function addGlobalHazardTiles(map, apiBaseUrl = "http://localhost:5000") {
             ["linear"],
             ["get", "ari500"],
             0,
-            "#4CAF50", // Green for low risk
+            "#4CAF50", // Green for 0-2m
+            2,
+            "#FFC107", // Yellow for 2-5m
             5,
-            "#FFC107", // Yellow for medium risk
+            "#FF9800", // Orange for 5-10m
             10,
-            "#FF9800", // Orange for high risk
-            20,
-            "#F44336", // Red for very high risk
+            "#F44336", // Red for 10m+
           ],
           "#1a73e8", // Default blue color
         ],
