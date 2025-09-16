@@ -13,5 +13,8 @@
   "type": "commonjs",
   "devDependencies": {
     "prettier": "^2.8.8"
+  },
+  "dependencies": {
+    "@microsoft/applicationinsights-web": "^3.0.0"
   }
 }

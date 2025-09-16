@@ -5,6 +5,12 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://unpkg.com/maplibre-gl@5.6.0/dist/maplibre-gl.css" rel="stylesheet" />
+    <!-- Application Insights -->
+  <script>
+      window.APPLICATIONINSIGHTS_CONNECTION_STRING = "__APPINSIGHTS_CONN__";
+  </script>
+  <script src="https://js.monitor.azure.com/scripts/b/ai.3.gbl.min.js"></script>
+  <script src="js/appInsights.js"></script>
   <script src="https://unpkg.com/maplibre-gl@5.6.0/dist/maplibre-gl.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.9"></script>
   <!-- Base map configuration -->
@@ -17,8 +23,6 @@
   <!-- <script src="js/points-layer.js"></script> -->
   <!-- Add this to your index.html file, wherever your other script tags are located -->
   <!-- <script src="js/norway-hazard-tiles.js"></script> -->
-  <!-- Application Insights -->
-  <script src="js/appInsights.js"></script>
   <style>
     /* Reset and full screen layout */
     * {

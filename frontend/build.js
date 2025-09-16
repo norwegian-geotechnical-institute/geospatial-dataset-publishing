@@ -18,13 +18,6 @@ if (apiBaseUrl) {
   html = html.replace("</head>", `${scriptTag}\n</head>`);
 }
 
-// Add Application Insights connection string if available
-const appInsightsConnectionString = process.env.APPLICATIONINSIGHTS_CONNECTION_STRING || "";
-if (appInsightsConnectionString) {
-  const appInsightsScript = `<script>window.APPLICATIONINSIGHTS_CONNECTION_STRING = "${appInsightsConnectionString}";</script>`;
-  html = html.replace("</head>", `${appInsightsScript}\n</head>`);
-}
-
 const distHtmlPath = path.join(__dirname, "dist", "index.html");
 fs.writeFileSync(distHtmlPath, html);
 
@@ -34,9 +27,3 @@ const distJsDir = path.join(__dirname, "dist", "js");
 fs.readdirSync(srcJsDir).forEach((file) => {
   fs.copyFileSync(path.join(srcJsDir, file), path.join(distJsDir, file));
 });
-
-if (appInsightsConnectionString) {
-  console.log("Application Insights: Enabled");
-} else {
-  console.log("Application Insights: Disabled (no connection string provided)");
-}
