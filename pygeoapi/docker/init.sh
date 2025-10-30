@@ -17,7 +17,7 @@ else
 fi
 
 # Get pygeoapi version
-PYGEOAPI_VERSION=$(pygeoapi --version 2>&1)
+PYGEOAPI_VERSION=$(python3 -c "import pygeoapi; print('pygeoapi, version', pygeoapi.__version__)" 2>/dev/null || echo "unknown")
 echo "$(get_timestamp) [init] PyGeoAPI version: $PYGEOAPI_VERSION"
 
 # Remove any existing readiness indicator

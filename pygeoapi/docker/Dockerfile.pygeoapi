@@ -1,4 +1,4 @@
-FROM geopython/pygeoapi:latest
+FROM geopython/pygeoapi:0.21.0
 
 # Copy configuration
 COPY pygeoapi/pygeoapi-config.yml /pygeoapi/local.config.yml
