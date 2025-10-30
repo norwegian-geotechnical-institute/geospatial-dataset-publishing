@@ -46,4 +46,4 @@ echo "$(get_timestamp) [init] Initialization complete"
 
 # Start the pygeoapi service
 echo "$(get_timestamp) [init] Starting pygeoapi service"
-exec /entrypoint.sh "$@"
+exec /entrypoint.sh run "$@"
