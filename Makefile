@@ -16,6 +16,7 @@ TIPPE_IMAGE := emotionalcities/tippecanoe
 
 # Other flags
 LOCAL ?= false   # Set to 'true' to build and run with the local frontend image
+NOCACHE ?= false # Set to 'true' to force rebuild without cache
 
 # Paths
 DATA_DIR := $(CURDIR)/data
@@ -63,12 +64,17 @@ docker-up-%: ## Start a specific service
 	$(COMPOSE) --project-name $(PROJECT_NAME) up -d $*
 
 # Build and run with local or remote frontend image
-docker-build-frontend: ## Build local frontend Docker image
+docker-build-frontend: ## Build local frontend Docker image (use NOCACHE=true to force rebuild)
 	@echo "Building local frontend Docker image..."
-	docker build -t $(FRONTEND_IMAGE_LOCAL) ./$(FRONTEND_DIR)
+	@if [ "$(NOCACHE)" = "true" ]; then \
+		echo "Building WITHOUT cache..."; \
+		docker build --no-cache -t $(FRONTEND_IMAGE_LOCAL) ./$(FRONTEND_DIR); \
+	else \
+		docker build -t $(FRONTEND_IMAGE_LOCAL) ./$(FRONTEND_DIR); \
+	fi
 
 # Unified run target (use LOCAL=true to prefer the locally-built frontend image)
-docker-run: ## Run the stack (use LOCAL=true for local frontend build)
+docker-run: ## Run the stack (use LOCAL=true for local frontend build, NOCACHE=true to force rebuild)
 	@if [ "$(LOCAL)" = "true" ]; then \
 		echo "Building and running with local images..."; \
 		$(MAKE) docker-build-frontend; \
