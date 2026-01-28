@@ -59,8 +59,8 @@
       border-radius: 8px;
       box-shadow: 0 2px 16px rgba(0, 0, 0, 0.2);
       font-family: 'Roboto', 'Arial', sans-serif;
-      max-width: 480px;
-      max-height: 80vh;
+      max-width: 800px;
+      max-height: 85vh;
       overflow-y: auto;
       background: white;
     }
@@ -99,6 +99,8 @@
       margin: 12px 0;
       border-radius: 4px;
       background: #fafafa;
+      max-width: 100%;
+      height: auto;
     }
 
     .popup-table {
@@ -371,7 +373,7 @@
     }
 
     .info-content.expanded {
-      max-height: 500px;
+      max-height: 700px;
       padding: 16px;
     }
 
@@ -437,7 +439,8 @@
     .info-reference-link {
       color: #1a73e8;
       text-decoration: none;
-      word-break: break-all;
+      word-break: break-word;
+      overflow-wrap: anywhere;
     }
 
     .info-reference-link:hover {
@@ -682,11 +685,16 @@
     @media (max-width: 768px) {
       .maplibregl-popup-content {
         max-width: calc(100vw - 32px);
-        max-height: 70vh;
+        max-height: 75vh;
       }
 
       .hazard-popup {
         padding: 12px;
+      }
+
+      .hazard-popup canvas {
+        width: 100% !important;
+        height: auto !important;
       }
 
       .popup-table {
@@ -705,7 +713,9 @@
         gap: 8px;
       }
 
-      .map-info.expanded,
+      .map-info.expanded {
+        max-width: 500px;
+      }
       .map-legend {
         min-width: auto;
         max-width: none;
@@ -813,6 +823,7 @@
         </div>
 
         <div class="info-instructions">
+          <p>The tsunami run-up heights displayed at shoreline locations have been estimated by interpolating from values from the nearest offshore hazard points using an Inverse Distance Weighted (IDW) method</p>
           <h4>How to Use:</h4>
           <ul>
             <li>Find dataset readme file here: <a href="https://zenodo.org/records/16964551" target="_blank"

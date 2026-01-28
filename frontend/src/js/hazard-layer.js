@@ -114,9 +114,9 @@ function addGlobalHazardTiles(map, apiBaseUrl = "http://localhost:5000") {
       const properties = e.features[0].properties;
       const featureId = properties.id || Date.now();
 
-      // Build limited properties table (first 7 items)
+      // Build limited properties table (first 7 items), excluding rate fields
       const propertyEntries = Object.entries(properties).filter(
-        ([key]) => key !== "id" && key !== "fid"
+        ([key]) => key !== "id" && key !== "fid" && !key.toLowerCase().includes("rate")
       );
       const visibleProperties = propertyEntries.slice(0, 7);
       const hiddenProperties = propertyEntries.slice(7);
@@ -135,10 +135,11 @@ function addGlobalHazardTiles(map, apiBaseUrl = "http://localhost:5000") {
       const canvasId = `rate-chart-${featureId}`;
       const downloadId = `download-${featureId}`;
 
+      // UPDATED: Increased canvas size from 400x160 to 650x350
       const html = `
         <div class="hazard-popup">
           <h3>Global Hazard Point</h3>
-          <canvas id="${canvasId}" width="400" height="160"></canvas>
+          <canvas id="${canvasId}" width="650" height="350"></canvas>
           <button class="download-btn" id="${downloadId}">Download CSV</button>
           <details class="properties-details">
             <summary>Properties (${propertyEntries.length} total)</summary>
@@ -154,9 +155,10 @@ function addGlobalHazardTiles(map, apiBaseUrl = "http://localhost:5000") {
           <div class="popup-hint">💡 Press <kbd>ESC</kbd> to close this popup</div>
         </div>`;
 
+      // UPDATED: Increased popup maxWidth from 480px to 750px
       // Create popup with improved configuration to prevent jumping
       currentPopup = new maplibregl.Popup({
-        maxWidth: "480px",
+        maxWidth: "750px",
         className: "chart-popup",
         closeOnClick: false,
         closeOnMove: false,
@@ -313,8 +315,16 @@ function addGlobalHazardTiles(map, apiBaseUrl = "http://localhost:5000") {
         const downloadBtn = document.getElementById(downloadId);
         if (downloadBtn) {
           downloadBtn.addEventListener("click", () => {
-            const header = Object.keys(properties).join(",");
-            const values = Object.values(properties).join(",");
+            // Filter out rate fields from CSV export
+            const filteredProperties = Object.entries(properties)
+              .filter(([key]) => !key.toLowerCase().includes("rate"))
+              .reduce((obj, [key, value]) => {
+                obj[key] = value;
+                return obj;
+              }, {});
+
+            const header = Object.keys(filteredProperties).join(",");
+            const values = Object.values(filteredProperties).join(",");
             const csv = `${header}\n${values}`;
             const blob = new Blob([csv], { type: "text/csv" });
             const link = document.createElement("a");
