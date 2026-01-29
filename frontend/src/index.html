@@ -270,8 +270,12 @@
     .map-info.expanded {
       border-radius: 8px;
       min-width: 280px;
-      max-width: 320px;
+      max-width: 500px;
+      max-height: calc(100vh - 120px);
       cursor: default;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
     }
 
     /* Text button when collapsed */
@@ -310,6 +314,7 @@
       transition: all 0.2s ease;
       background: rgba(26, 115, 232, 0.05);
       border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+      flex-shrink: 0;
     }
 
     .info-header:hover {
@@ -350,6 +355,7 @@
       color: #5f6368;
       background: rgba(26, 115, 232, 0.02);
       border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+      flex-shrink: 0;
     }
 
     .info-summary-item {
@@ -373,8 +379,28 @@
     }
 
     .info-content.expanded {
-      max-height: 700px;
+      max-height: calc(100vh - 200px);
       padding: 16px;
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+
+    .info-content.expanded::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .info-content.expanded::-webkit-scrollbar-track {
+      background: #f8f9fa;
+      border-radius: 3px;
+    }
+
+    .info-content.expanded::-webkit-scrollbar-thumb {
+      background: #dadce0;
+      border-radius: 3px;
+    }
+
+    .info-content.expanded::-webkit-scrollbar-thumb:hover {
+      background: #bdc1c6;
     }
 
     .info-stat {
@@ -764,7 +790,7 @@
 
   <!-- Map Headline Overlay -->
   <div class="map-headline">
-    GTM Global tsunami hazard – 2017 version
+    GTM Global tsunami hazard
   </div>
 
   <!-- Combined Information and Legend Panel -->
