@@ -3,6 +3,9 @@
  * @returns {Object} Base map style configuration
  */
 function getBaseMapStyle() {
+  const cartoKey = window.CARTO_BASEMAP_API_KEY || "";
+  // ASVS 1.2.2: encode the key as a query value, preserving tile placeholders.
+  const cartoQuery = cartoKey ? `?key=${encodeURIComponent(cartoKey)}` : "";
   return {
     version: 8,
     sources: {
@@ -10,10 +13,10 @@ function getBaseMapStyle() {
       "cartodb-light": {
         type: "raster",
         tiles: [
-          "https://a.basemaps.cartocdn.com/light_all/{z}/{x}/{y}@2x.png",
-          "https://b.basemaps.cartocdn.com/light_all/{z}/{x}/{y}@2x.png",
-          "https://c.basemaps.cartocdn.com/light_all/{z}/{x}/{y}@2x.png",
-          "https://d.basemaps.cartocdn.com/light_all/{z}/{x}/{y}@2x.png",
+          `https://a.basemaps.cartocdn.com/light_all/{z}/{x}/{y}@2x.png${cartoQuery}`,
+          `https://b.basemaps.cartocdn.com/light_all/{z}/{x}/{y}@2x.png${cartoQuery}`,
+          `https://c.basemaps.cartocdn.com/light_all/{z}/{x}/{y}@2x.png${cartoQuery}`,
+          `https://d.basemaps.cartocdn.com/light_all/{z}/{x}/{y}@2x.png${cartoQuery}`,
         ],
         tileSize: 256,
         attribution: "© OpenStreetMap contributors, © CARTO",

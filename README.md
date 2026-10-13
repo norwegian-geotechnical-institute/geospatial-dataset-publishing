@@ -32,6 +32,17 @@ When deploying in different environments (local, Kubernetes, etc.), the followin
 
 #### Frontend:
 
+- `CARTO_BASEMAP_API_KEY`: CARTO basemap key, supplied to the frontend container
+  at runtime (in Kubernetes, through the Key Vault-backed Secret). The entrypoint
+  writes JSON-escaped browser configuration before nginx starts. Do not pass the
+  key as a build argument or commit its value. Without a key the app still starts,
+  but CARTO may return watermarked tiles. Request a key at
+  https://www.carto.com/basemaps/apikey/.
+  The key is visible in browser tile requests; use a dedicated basemap key with
+  allowed-origin restrictions for your deployment. Attribution remains required.
+  Restart/recreate the container after changing the environment value; runtime
+  configuration is served with `Cache-Control: no-store` to support rotation.
+
 - `API_BASE_URL`: The URL where the frontend will connect to the backend API.
   - For local development: Not needed (will default to `http://localhost:5000`)
   - For Docker Compose: `http://backend:5000`
@@ -67,6 +78,19 @@ if you change the path or dataset name.
 This repository uses **Black**, **isort**, and **Ruff** for Python code. The frontend is formatted with **Prettier**. Recommended VS Code settings are provided in the `.vscode` folder.
 Run `pip install -r requirements-dev.txt` to install Python tooling. Frontend formatting tools can be installed by running `npm install` inside the `frontend` directory.
 Use `npm run format` to format frontend code.
+
+Run frontend configuration tests with `cd frontend && npm test`. To also test
+real container startup and key replacement, run from the repository root:
+
+```bash
+docker build -t tsunami-frontend:test frontend
+cd frontend
+CARTO_TEST_IMAGE=tsunami-frontend:test npm test
+```
+
+Docker Compose forwards `CARTO_BASEMAP_API_KEY` from your shell to the frontend.
+Source-only serving does not run the container entrypoint; use the container to
+verify runtime key injection.
 
 ## CI/CD
 

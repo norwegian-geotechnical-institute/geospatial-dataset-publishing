@@ -12,7 +12,9 @@ ENV API_BASE_URL=${API_BASE_URL}
 RUN npm run build
 
 FROM nginx:1.29-alpine
+RUN apk add --no-cache jq
 WORKDIR /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=build /app/dist/ ./
 COPY docker-entrypoint.sh /docker-entrypoint.sh
 RUN chmod +x /docker-entrypoint.sh
